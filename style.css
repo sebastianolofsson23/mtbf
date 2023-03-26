@@ -1,0 +1,66 @@
+/* Apply CSS styles to the HTML elements */
+
+/* Set a max-width for the entire page */
+body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Style the label elements */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Style the input elements */
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Style the submit button */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Style the retry button */
+#retryButton {
+  background-color: #f44336;
+}
+
+/* Style the paragraph element */
+#customValueDisplay {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width: 600px) {
+  /* Set the max-width to 100% for smaller screens */
+  body {
+    max-width: 100%;
+  }
+  
+  /* Adjust the padding of the input elements */
+  input[type="number"],
+  select {
+    padding: 5px;
+  }
+  
+  /* Adjust the padding of the buttons */
+  button {
+    padding: 5px 10px;
+  }
+}
