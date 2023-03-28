@@ -16,7 +16,7 @@ label {
 /* Style the input elements */
 input[type="text"],
 select {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -45,6 +45,31 @@ button {
   margin-top: 20px;
   font-weight: bold;
 }
+h1 {
+font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  text-shadow: 1px 1px 2px #ccc;
+}
+#check1 {
+  display: inline-block;
+  order: -1;
+}
+
+#input1 {
+  display: inline-block;
+}
+
+#check2 {
+  display: inline-block;
+  order: -1;
+}
+
+#input2 {
+  display: inline-block;
+}
+
 
 /* Add media queries for smaller screens */
 @media screen and (max-width: 600px) {
