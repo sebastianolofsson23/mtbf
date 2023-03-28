@@ -2,9 +2,75 @@
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
-    <label for="multiplierInput">MTBF i timmar:</label>
-    <input type="text" id="multiplierInput" oninput="formatNumber(this)" />
+    <h1>
+      Kryssa i om du vill använda dig av antingen MTBF eller felintesitet som värde.
+    </h1>
+    <script>
+var multipliermtbf;
+var failratetomtbf
+function storeInputValue() {
+  if (document.getElementById("check1").checked) {
+    multipliermtbf = document.getElementById("input1").value.replace(/\s/g, '');
+  } else if (document.getElementById("check2").checked) {
+    failratetomtbf = document.getElementById("input2").value.replace(/\s/g, '');
+    multipliermtbf = 1000000/failratetomtbf;
+  }
+}
+
+
+      function toggleInput(inputNum) {
+        // Add code to toggle the input here
+        storeInputValue();
+      }
+
+      function handleInputChange() {
+        storeInputValue();
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("check1").addEventListener("change", storeInputValue);
+        document.getElementById("check2").addEventListener("change", storeInputValue);
+        document.getElementById("input1").addEventListener("input", handleInputChange);
+        document.getElementById("input2").addEventListener("input", handleInputChange);
+      });
+    </script>
+    <label for="check1">MTBF i timmar</label>
+    <input type="text" id="input1" oninput="formatNumber(this)" >
+    <input type="checkbox" id="check1" onchange="toggleInput(1)" checked>
     
+    
+    <label for="check2">Felintensitet per 1 miljon timmar</label>
+    <input type="text" id="input2" disabled oninput="formatNumber(this)" >
+    <input type="checkbox" id="check2" onchange="toggleInput(2)">
+    
+    
+    <script>
+      function toggleInput(inputNumber) {
+        if (inputNumber === 1) {
+          document.getElementById("input1").value = ""; // clear input1 text
+          document.getElementById("input1").disabled = false;
+          document.getElementById("input2").value = ""; // clear input2 text
+          document.getElementById("input2").disabled = true;
+          document.getElementById("check2").checked = false;
+        } else if (inputNumber === 2) {
+          document.getElementById("input1").value = ""; // clear input1 text
+          document.getElementById("input1").disabled = true;
+          document.getElementById("check1").checked = false;
+          document.getElementById("input2").value = ""; // clear input2 text
+          document.getElementById("input2").disabled = false;
+        }
+      
+        // Disable both input fields if both checkboxes are unchecked
+        if (!document.getElementById("check1").checked && !document.getElementById("check2").checked) {
+          document.getElementById("input1").value = "";
+          document.getElementById("input2").value = "";
+          document.getElementById("input1").disabled = true;
+          document.getElementById("input2").disabled = true;
+        }
+      }
+      
+      </script>
+
     <script>
     let inputValue = '';
     
@@ -25,6 +91,7 @@
       input.value = formattedValue;
     }
     </script>
+
  <label for="dropdown1">Välj vilken temperatur ditt MTBF värde gäller för:</label>
 <select id="dropdown1">
     <option value="10">10</option>
@@ -77,8 +144,9 @@
 			<option value="AUC">Airborne Uninhabited Cargo</option>
 			<option value="AUF">Airborne Uninhabited Fighter</option>
         </select>
+        <br>
 <button id="submitButton">Submit</button>
-<button id="retryButton">Retry</button>
+<button type="submit" id="retryButton">Retry</button>
 
 <p id="customValueDisplay"></p>
 
@@ -95,12 +163,14 @@
   let customValue = 0;
   customEnv = 0;
   function updateCustomValue() {
-    const value1 = dropdown1.value;
+  const value1 = dropdown1.value;
   const value3 = dropdown3.value;
   const value2 = dropdown2.value;
   const value4 = dropdown4.value;
-  const multiplier = parseFloat(multiplierInput.value);
-  console.log(inputValue);
+
+
+
+
   
   if (value1 === "10" && value3 === "10") {
     customValue = 1;
@@ -478,15 +548,19 @@
 
 
 
-  customValue *= inputValue;
+  customValue *= multipliermtbf;
+  
 }
 
   function showCustomValue() {
-    customValueDisplay.textContent = "MTBF i den nya miljön: " + 
+    customValueDisplay.textContent = "MTBF respektive felintensitet i den nya miljön: " + 
   (customValue * customEnv).toLocaleString('sv-SE', { 
     minimumFractionDigits: 0, 
     maximumFractionDigits: customValue * customEnv % 1 === 0 ? 0 : 2 
-  }) + " timmar";
+  }) + " timmar " + "eller " + (1000000/(customValue * customEnv)).toLocaleString('sv-SE', { 
+    minimumFractionDigits: 0, 
+    maximumFractionDigits: 3 
+  }) + " fel per miljon timmar";
 
   }
 
@@ -494,7 +568,6 @@
     customValue = 0;
     customEnv = 0;
     InputValue = 0;
-    customValueDisplay.textContent = "Custom value: " + customValue;
   }
 
   
@@ -504,7 +577,6 @@
   });
 
   retryButton.addEventListener("click", resetCustomValue);
-
   multiplierInput.addEventListener("input", updateCustomValue);
   dropdown1.addEventListener("change", updateCustomValue);
   dropdown3.addEventListener("change", updateCustomValue);
@@ -523,5 +595,7 @@ retryButton.addEventListener("click", function () {
   customEnv = 0;
   clearUI();
 });
+
 </script>
+
 </html>
