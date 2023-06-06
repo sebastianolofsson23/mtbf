@@ -34,13 +34,18 @@ function storeInputValue() {
         document.getElementById("input2").addEventListener("input", handleInputChange);
       });
     </script>
-    <label for="check1">MTBF i timmar</label>
-    <input type="text" id="input1" oninput="formatNumber(this)" >
+	<label for="check1">MTBF i timmar</label>
+    <input type="text" id="input1" oninput="validateInput(this)">
+    <script>
+      function validateInput(input) {
+        input.value = input.value.replace(/[^0-9.]/g, '');
+      }
+      </script>
     <input type="checkbox" id="check1" onchange="toggleInput(1)" checked>
     
     
     <label for="check2">Felintensitet per 1 miljon timmar</label>
-    <input type="text" id="input2" disabled oninput="formatNumber(this)" >
+    <input type="text" id="input2" disabled oninput="validateInput(this)" >
     <input type="checkbox" id="check2" onchange="toggleInput(2)">
     
     
