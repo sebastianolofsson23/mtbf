@@ -582,11 +582,28 @@ function formatNumber(input) {
     InputValue = 0;
   }
 
-  
+  // Get the text field elements
+const input1 = document.getElementById('input1');
+const input2 = document.getElementById('input2');
+
+// Listen for keypress event on the text fields
+input1.addEventListener('keypress', handleKeyPress);
+input2.addEventListener('keypress', handleKeyPress);
+
+// Function to handle keypress event
+function handleKeyPress(event) {
+  // Check if the Enter key was pressed (key code 13)
+  if (event.keyCode === 13) {
+    // Execute the submitButton click event
+    submitButton.click();
+  }
+}
+
   submitButton.addEventListener("click", function() {
     updateCustomValue();
     showCustomValue();
   });
+  
 
   retryButton.addEventListener("click", resetCustomValue);
   multiplierInput.addEventListener("input", updateCustomValue);
